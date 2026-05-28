@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2.4kWh DIY LFP Solar Battery System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green: #b8f030;
+  --green-glow: #b8f03044;
+  --green-dim: #b8f03012;
+  --black: #080908;
+  --surface: #111310;
+  --surface2: #181b15;
+  --border: #252820;
+  --border2: #303528;
+  --text: #eceee0;
+  --muted: #7a8068;
+  --display: 'Bebas Neue', sans-serif;
+  --mono: 'Space Mono', monospace;
+  --body: 'DM Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: var(--body);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--green); border-radius: 2px; }
+
+/* ══════════════════════════════════
+   NAV
+══════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 0 60px;
+  height: 60px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(8,9,8,0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--display);
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  color: var(--green);
+}
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--green); }
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  position: relative;
+  overflow: hidden;
+  padding-top: 60px;
+}
+
+/* big ghost number behind content */
+.hero-ghost {
+  position: absolute;
+  bottom: -30px; left: -20px;
+  font-family: var(--display);
+  font-size: clamp(180px, 25vw, 360px);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px #b8f03010;
+  letter-spacing: -0.02em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.hero-content {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 60px 80px 80px;
+  position: relative; z-index: 1;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 40px; height: 1px;
+  background: var(--green);
+}
+
+/* THE BIG HEADLINE */
+h1 {
+  font-family: var(--display);
+  font-size: clamp(72px, 9vw, 130px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+h1 .accent {
+  color: var(--green);
+  display: block;
+}
+h1 .outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--text);
+  display: block;
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 420px;
+  margin-bottom: 52px;
+  line-height: 1.8;
+  border-left: 2px solid var(--green);
+  padding-left: 20px;
+}
+
+.hero-stats {
+  display: flex; gap: 0;
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 440px;
+}
+.stat {
+  flex: 1;
+  padding: 20px 18px;
+  text-align: center;
+  background: var(--surface);
+  border-right: 1px solid var(--border2);
+  position: relative;
+}
+.stat:last-child { border-right: none; }
+.stat::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 20%; right: 20%;
+  height: 2px;
+  background: var(--green);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.stat:hover::after { opacity: 1; }
+.stat-val {
+  font-family: var(--display);
+  font-size: 36px;
+  letter-spacing: 0.05em;
+  color: var(--green);
+  display: block;
+  line-height: 1;
+}
+.stat-unit {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--green);
+  opacity: 0.7;
+  display: block;
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  display: block;
+  font-family: var(--mono);
+}
+
+.hero-image {
+  position: relative; overflow: hidden;
+}
+.hero-image img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  filter: brightness(0.7) saturate(0.85);
+  transition: transform 10s ease, filter 0.4s;
+}
+.hero-image:hover img {
+  transform: scale(1.04);
+  filter: brightness(0.85) saturate(1);
+}
+.hero-image::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--black) 0%, transparent 25%);
+  z-index: 1;
+}
+.hero-image::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, var(--black) 0%, transparent 40%);
+  z-index: 1;
+}
+
+/* ══════════════════════════════════
+   TICKER / MARQUEE STRIP
+══════════════════════════════════ */
+.ticker {
+  border-top: 1px solid var(--border2);
+  border-bottom: 1px solid var(--border2);
+  background: var(--surface);
+  overflow: hidden;
+  padding: 12px 0;
+}
+.ticker-inner {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker 28s linear infinite;
+}
+.ticker-item {
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  padding: 0 32px;
+  flex-shrink: 0;
+}
+.ticker-item.lit { color: var(--green); }
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ══════════════════════════════════
+   SECTION STRUCTURE
+══════════════════════════════════ */
+section {
+  padding: 120px 80px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 14px;
+}
+.section-eyebrow::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--green);
+  display: inline-block;
+}
+
+/* BIG SECTION HEADINGS */
+h2 {
+  font-family: var(--display);
+  font-size: clamp(56px, 7vw, 96px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  margin-bottom: 64px;
+}
+h2 .outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--border2);
+  display: block;
+}
+h2 .green { color: var(--green); }
+
+/* ══════════════════════════════════
+   SYSTEM CARDS
+══════════════════════════════════ */
+.sys-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 80px;
+}
+.sys-card {
+  background: var(--surface);
+  padding: 44px 36px;
+  transition: background 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.sys-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--green);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.sys-card:hover { background: var(--surface2); }
+.sys-card:hover::before { transform: scaleX(1); }
+
+.sys-icon {
+  font-size: 32px;
+  margin-bottom: 20px;
+  display: block;
+}
+.sys-card h3 {
+  font-family: var(--display);
+  font-size: 28px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  margin-bottom: 14px;
+  line-height: 1;
+}
+.sys-card p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.tag {
+  display: inline-block;
+  background: var(--green-dim);
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin: 0 4px 6px 0;
+  border: 1px solid #b8f03025;
+  letter-spacing: 0.08em;
+}
+
+/* ══════════════════════════════════
+   ARCHITECTURE FLOW
+══════════════════════════════════ */
+.arch-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 52px 44px;
+  overflow-x: auto;
+  margin-bottom: 0;
+}
+.arch-title {
+  font-family: var(--display);
+  font-size: 14px;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 36px;
+}
+.arch-flow {
+  display: flex; align-items: stretch;
+  gap: 0;
+  min-width: 700px;
+}
+.arch-node {
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 24px 18px;
+  text-align: center;
+}
+.arch-node.center {
+  border-color: var(--green);
+  background: #b8f03008;
+  box-shadow: 0 0 32px #b8f03012;
+}
+.arch-node-icon { font-size: 26px; margin-bottom: 10px; display: block; }
+.arch-node h4 {
+  font-family: var(--display);
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.arch-node p { font-size: 11px; color: var(--muted); font-family: var(--mono); line-height: 1.5; }
+.arch-arrow {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  flex: 0 0 44px;
+  gap: 6px;
+}
+.arch-arrow-line {
+  width: 28px; height: 1px;
+  background: var(--green);
+  opacity: 0.5;
+  position: relative;
+}
+.arch-arrow-line::after {
+  content: '▶';
+  position: absolute;
+  right: -8px; top: -6px;
+  font-size: 10px;
+  color: var(--green);
+  opacity: 0.7;
+}
+.arch-arrow span {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════
+   SPECS TABLE
+══════════════════════════════════ */
+.spec-wrap {
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  overflow: hidden;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+tr { border-bottom: 1px solid var(--border); }
+tr:last-child { border-bottom: none; }
+tr:hover td { background: var(--surface2) !important; }
+td {
+  padding: 18px 28px;
+  font-size: 15px;
+  vertical-align: top;
+  transition: background 0.15s;
+}
+td:first-child {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  width: 32%;
+  background: var(--surface);
+}
+td:last-child {
+  color: var(--text);
+  background: var(--black);
+}
+.td-live {
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 13px;
+  display: flex; align-items: center; gap: 8px;
+}
+.td-live::before {
+  content: '';
+  width: 8px; height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 #b8f03055; }
+  50%       { box-shadow: 0 0 0 6px transparent; }
+}
+
+/* ══════════════════════════════════
+   PHASES
+══════════════════════════════════ */
+.phases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.phase-card {
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 36px 28px;
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s;
+}
+.phase-card:hover { background: var(--surface2); border-color: var(--border2); }
+.phase-card.live {
+  border-color: var(--green);
+  background: #b8f0300a;
+}
+.live-badge {
+  position: absolute; top: 20px; right: 20px;
+  font-family: var(--mono);
+  font-size: 9px;
+  background: var(--green);
+  color: var(--black);
+  padding: 4px 10px;
+  border-radius: 3px;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+.phase-num {
+  font-family: var(--display);
+  font-size: 80px;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--border2);
+  margin-bottom: 16px;
+  display: block;
+}
+.phase-card.live .phase-num {
+  -webkit-text-stroke: 1px #b8f03030;
+}
+.phase-card h3 {
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.phase-card ul { list-style: none; }
+.phase-card li {
+  font-size: 14px;
+  color: var(--muted);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.phase-card li:last-child { border-bottom: none; }
+.phase-card li::before {
+  content: '→';
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════
+   GALLERY
+══════════════════════════════════ */
+.gallery {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 300px 300px;
+  gap: 8px;
+}
+.g-item {
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+}
+.g-item:first-child { grid-row: 1 / 3; }
+.g-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75) saturate(0.8);
+  transition: filter 0.4s, transform 0.6s;
+  display: block;
+}
+.g-item:hover img { filter: brightness(1) saturate(1); transform: scale(1.04); }
+.g-cap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 20px 16px 16px;
+  background: linear-gradient(to top, rgba(8,9,8,0.95) 0%, transparent 100%);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.g-placeholder {
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--border2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.g-placeholder span { font-size: 26px; opacity: 0.4; }
+
+/* ══════════════════════════════════
+   CREDIT
+══════════════════════════════════ */
+.credit-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 48px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 40px;
+  align-items: start;
+  transition: border-color 0.3s;
+}
+.credit-card:hover { border-color: #ff3333; }
+.yt-icon {
+  width: 64px; height: 64px;
+  background: #ff000018;
+  border: 1px solid #ff000035;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.credit-card h3 {
+  font-family: var(--display);
+  font-size: 32px;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.credit-card p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.yt-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #ff4444;
+  text-decoration: none;
+  border: 1px solid #ff444330;
+  padding: 10px 20px;
+  border-radius: 6px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: background 0.2s, border-color 0.2s;
+}
+.yt-btn:hover { background: #ff00001a; border-color: #ff444460; }
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+footer a { color: var(--green); text-decoration: none; }
+.footer-mark {
+  font-family: var(--display);
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  color: var(--border2);
+}
+
+/* ══════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════
+   HERO ANIMATION
+══════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-content > * {
+  animation: fadeUp 0.7s ease both;
+}
+.hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.22s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.34s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.48s; }
+
+/* ══════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════ */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-image { height: 55vw; }
+  .hero-content { padding: 80px 24px 60px; }
+  section { padding: 80px 24px; }
+  .sys-grid { grid-template-columns: 1fr; }
+  .phases-grid { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery .g-item:first-child { grid-row: auto; }
+  .credit-card { grid-template-columns: 1fr; gap: 24px; padding: 32px; }
+  footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 24px; }
+  h2 { font-size: clamp(48px, 10vw, 72px); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">LFP_SOLAR_BUILD</div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#specs">Specs</a></li>
+    <li><a href="#phases">Phases</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#credit">Credits</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-ghost">2.4</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">DIY Energy Storage &nbsp;·&nbsp; Patna, India &nbsp;·&nbsp; 2025–26</div>
+    <h1>
+      <span class="outline">2.4 kWh</span>
+      <span class="accent">LFP Solar</span>
+      BATTERY BUILD
+    </h1>
+    <p class="hero-sub">Designed, procured, assembled and commissioned from scratch. A 12V LFP pack with MPPT solar — built for reliability, expandability, and full off-grid capability.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-val">2.4</span>
+        <span class="stat-unit">kWh</span>
+        <span class="stat-label">Capacity</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">1.1</span>
+        <span class="stat-unit">kW</span>
+        <span class="stat-label">Solar</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">85%</span>
+        <span class="stat-unit">SOC</span>
+        <span class="stat-label">Live</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="IMG_20260521_122536423.jpg" alt="Assembled 2.4kWh LFP Battery with SOC display at 85%">
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item lit">LFP BATTERY</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">4S2P CONFIGURATION</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item lit">200AH CAPACITY</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">JK SMART BMS</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item lit">ACTIVE CELL BALANCING</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">50A MPPT</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item lit">1.1KW SOLAR</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">PURE SINE WAVE</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item lit">SOC MONITORING</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">PHASE 1 LIVE</span>
+    <span class="ticker-item">·</span>
+
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item lit">LFP BATTERY</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">4S2P CONFIGURATION</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item lit">200AH CAPACITY</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">JK SMART BMS</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item lit">ACTIVE CELL BALANCING</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">50A MPPT</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item lit">1.1KW SOLAR</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">PURE SINE WAVE</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item lit">SOC MONITORING</span>
+    <span class="ticker-item">·</span>
+    <span class="ticker-item">PHASE 1 LIVE</span>
+    <span class="ticker-item">·</span>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="reveal">
+    <div class="section-eyebrow">System Overview</div>
+    <h2>WHAT'S<br><span class="outline">INSIDE</span><br><span class="green">THE BUILD</span></h2>
+  </div>
+
+  <div class="sys-grid reveal">
+    <div class="sys-card">
+      <span class="sys-icon">🔋</span>
+      <h3>BATTERY PACK</h3>
+      <p>8× Grade A prismatic LFP cells (100Ah each) in a 4S2P configuration — delivering 12V at 200Ah. Architecture is already designed for upgrade to 8S1P at 24V when the hybrid inverter arrives.</p>
+      <span class="tag">4S2P</span><span class="tag">12V / 200Ah</span><span class="tag">LFP Chemistry</span>
+    </div>
+    <div class="sys-card">
+      <span class="sys-icon">🧠</span>
+      <h3>SMART BMS</h3>
+      <p>JK Smart BMS (4–8S, 200A) with 2A active cell balancing continuously redistributes energy to keep SOC (State of Charge) uniform across the pack — critical for cycle life and preventing cell-level over/under-charge.</p>
+      <span class="tag">JK 200A BMS</span><span class="tag">2A Active Balancing</span><span class="tag">Dual NTC Probes</span>
+    </div>
+    <div class="sys-card">
+      <span class="sys-icon">☀️</span>
+      <h3>SOLAR ARRAY</h3>
+      <p>~1.1kW bifacial solar panels feeding a 50A MPPT charge controller. MPPT continuously tracks the panel's peak power point — maximising harvest regardless of temperature variation or partial shading.</p>
+      <span class="tag">1.1kW Peak</span><span class="tag">50A MPPT</span><span class="tag">Ashapower</span>
+    </div>
+    <div class="sys-card">
+      <span class="sys-icon">⚡</span>
+      <h3>INVERTER &amp; DISPLAY</h3>
+      <p>Microtek 12V 1kW Pure Sine Wave inverter delivers clean waveform output to household loads. JK 3.2" SOC display shows real-time voltage, current, State of Charge %, and pack temperature at a glance.</p>
+      <span class="tag">1kW Pure Sine</span><span class="tag">3.2" SOC Display</span><span class="tag">Microtek</span>
+    </div>
+  </div>
+
+  <!-- Architecture flow -->
+  <div class="arch-wrap reveal">
+    <div class="arch-title">System Architecture Flow</div>
+    <div class="arch-flow">
+      <div class="arch-node">
+        <span class="arch-node-icon">☀️</span>
+        <h4>SOLAR</h4>
+        <p>~1.1kW<br>Bifacial</p>
+      </div>
+      <div class="arch-arrow">
+        <div class="arch-arrow-line"></div>
+        <span>DC in</span>
+      </div>
+      <div class="arch-node">
+        <span class="arch-node-icon">📡</span>
+        <h4>MPPT</h4>
+        <p>50A<br>Ashapower</p>
+      </div>
+      <div class="arch-arrow">
+        <div class="arch-arrow-line"></div>
+        <span>Regulated DC</span>
+      </div>
+      <div class="arch-node center">
+        <span class="arch-node-icon">🔋</span>
+        <h4>LFP PACK</h4>
+        <p>2.4kWh<br>4S2P + BMS</p>
+      </div>
+      <div class="arch-arrow">
+        <div class="arch-arrow-line"></div>
+        <span>12V DC</span>
+      </div>
+      <div class="arch-node">
+        <span class="arch-node-icon">⚡</span>
+        <h4>INVERTER</h4>
+        <p>1kW<br>Pure Sine</p>
+      </div>
+      <div class="arch-arrow">
+        <div class="arch-arrow-line"></div>
+        <span>230V AC</span>
+      </div>
+      <div class="arch-node">
+        <span class="arch-node-icon">🏠</span>
+        <h4>HOME</h4>
+        <p>Fans, Lights<br>Devices</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECS -->
+<section id="specs">
+  <div class="reveal">
+    <div class="section-eyebrow">Technical Specifications</div>
+    <h2>FULL<br><span class="green">BUILD</span><br><span class="outline">SPECS</span></h2>
+  </div>
+  <div class="spec-wrap reveal">
+    <table>
+      <tr><td>Cell Chemistry</td><td>Lithium Iron Phosphate (LiFePO₄ / LFP)</td></tr>
+      <tr><td>Cell Format</td><td>Prismatic — Grade A, 100Ah each</td></tr>
+      <tr><td>Cell Count</td><td>8 cells total</td></tr>
+      <tr><td>Configuration</td><td>4S2P → 12V, 200Ah &nbsp;|&nbsp; Upgradeable to 8S1P at 24V</td></tr>
+      <tr><td>Pack Capacity</td><td>2.4 kWh nominal</td></tr>
+      <tr><td>BMS</td><td>JK Smart BMS, 4–8S, 200A continuous</td></tr>
+      <tr><td>Cell Balancing</td><td>Active balancing at 2A — continuously equalises SOC across all cells</td></tr>
+      <tr><td>Temp Monitoring</td><td>2× NTC sensor probes (supplied with JK BMS)</td></tr>
+      <tr><td>SOC Display</td><td>JK 3.2" LCD — live voltage, current, SOC%, temperature</td></tr>
+      <tr><td>Terminals</td><td>200A brass-coated, low-resistance connections</td></tr>
+      <tr><td>Enclosure</td><td>Custom DIY metal enclosure</td></tr>
+      <tr><td>Solar Array</td><td>~1.1kW bifacial panels</td></tr>
+      <tr><td>Charge Controller</td><td>Ashapower 50A MPPT — multi voltage range</td></tr>
+      <tr><td>Inverter</td><td>Microtek 12V, 1kW Pure Sine Wave</td></tr>
+      <tr><td>Current Status</td><td><span class="td-live">Phase 1 — Live &amp; Operational</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- PHASES -->
+<section id="phases">
+  <div class="reveal">
+    <div class="section-eyebrow">Project Roadmap</div>
+    <h2>BUILD<br><span class="green">PHASES</span></h2>
+  </div>
+  <div class="phases-grid reveal">
+    <div class="phase-card live">
+      <span class="live-badge">LIVE</span>
+      <span class="phase-num">01</span>
+      <h3>PHASE 1 — CURRENT</h3>
+      <ul>
+        <li>8× LFP cells in 4S2P (12V, 200Ah)</li>
+        <li>JK Smart BMS with 2A active balancing</li>
+        <li>1.1kW MPPT solar system</li>
+        <li>Microtek 1kW pure sine inverter</li>
+        <li>Metal enclosure + 3.2" SOC display</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">02</span>
+      <h3>PHASE 2 — PLANNED</h3>
+      <ul>
+        <li>Upgrade to 24V hybrid inverter</li>
+        <li>Reconfigure pack to 8S1P at 24V</li>
+        <li>Intelligent grid + solar + battery mgmt</li>
+        <li>Expand solar array capacity</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">03</span>
+      <h3>PHASE 3 — VISION</h3>
+      <ul>
+        <li>Full solar self-sufficiency</li>
+        <li>Zero grid dependency goal</li>
+        <li>Data logging &amp; remote monitoring</li>
+        <li>Possible second battery bank</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="reveal">
+    <div class="section-eyebrow">Build Photos</div>
+    <h2>IN THE<br><span class="green">FIELD</span></h2>
+  </div>
+  <div class="gallery reveal">
+    <div class="g-item">
+      <img src="IMG_20260523_092227863.jpg" alt="Full system install — inverter, MPPT controller and LFP battery pack">
+      <div class="g-cap">Full system — inverter, MPPT &amp; LFP pack</div>
+    </div>
+    <div class="g-item">
+      <img src="IMG_20260521_122536423.jpg" alt="LFP battery pack with SOC display showing 85%">
+      <div class="g-cap">Battery SOC: 85% live</div>
+    </div>
+    <div class="g-item">
+      <img src="IMG_20260521_122545629.jpg" alt="Ashapower MPPT showing CHG AMP 18.0">
+      <div class="g-cap">MPPT — CHG AMP: 18.0A</div>
+    </div>
+    <div class="g-item">
+      <div class="g-placeholder"><span>📷</span>Cell assembly — coming soon</div>
+    </div>
+    <div class="g-item">
+      <div class="g-placeholder"><span>📷</span>BMS wiring — coming soon</div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDIT -->
+<section id="credit">
+  <div class="reveal">
+    <div class="section-eyebrow">Acknowledgements</div>
+    <h2>STANDING ON<br><span class="green">SHOULDERS</span><br><span class="outline">OF MAKERS</span></h2>
+  </div>
+  <div class="credit-card reveal">
+    <div class="yt-icon">▶</div>
+    <div>
+      <h3>OFF GRID GARAGE — ANDY</h3>
+      <p>A huge part of my understanding of LFP cells, BMS configuration, SOC calibration, and MPPT systems came from Andy's Off Grid Garage channel. What makes it exceptional is Andy's methodology — he doesn't just explain theory, he tests everything himself, questions assumptions, and shares real measured data. That hands-on curiosity is exactly the kind of approach I aspire to. Genuinely one of the best resources in DIY energy storage.</p>
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=pijPu7t-akM&list=PLPomydD54sgC0pAzeOBz_-ZMfGMzJYYWK&index=5" target="_blank" rel="noopener">▶ &nbsp; Watch on YouTube</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Built in Patna, Bihar · India · 2025–26</span>
+  <span class="footer-mark">LFP_SOLAR_BUILD</span>
+  <span>Inspired by <a href="https://www.youtube.com/@OffGridGarage" target="_blank" rel="noopener">Off Grid Garage</a></span>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

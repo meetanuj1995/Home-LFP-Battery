@@ -352,6 +352,45 @@ h2 .green { color: var(--green); }
   line-height: 1.7;
   margin-bottom: 20px;
 }
+
+.sys-preview {
+  width: 100%;
+
+  display: block;
+
+  margin: 18px 0 22px;
+
+  border-radius: 12px;
+
+  border: 1px solid var(--border2);
+
+  background: #0b0b0b;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.sys-preview img {
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  object-fit: contain;
+}
+
+.sys-preview:hover {
+  transform: translateY(-2px);
+
+  border-color: var(--green);
+
+  box-shadow: 0 0 24px #b8f03022;
+}
+
 .tag {
   display: inline-block;
   background: var(--green-dim);
@@ -910,24 +949,74 @@ footer a { color: var(--green); text-decoration: none; }
   </div>
 
   <div class="sys-grid reveal">
+<div class="sys-card">
+
+  <span class="sys-icon">☀️</span>
+
+  <h3>SOLAR ARRAY</h3>
+
+  <p>
+    ~1.1kW bifacial solar panels feeding a 50A MPPT charge controller. MPPT continuously tracks the panel's peak power point — maximising harvest regardless of temperature variation or partial shading.
+  </p>
+
+  <div class="sys-preview">
+    <img src="Solar.jpg"
+         alt="Bifacial solar panel installation">
+  </div>
+
+  <span class="tag">1.1kW Peak</span>
+  <span class="tag">50A MPPT</span>
+  <span class="tag">Bifacial Panels</span>
+  <span class="tag">Ashapower</span>
+
+</div>
+
+
     <div class="sys-card">
-      <span class="sys-icon">🔋</span>
-      <h3>BATTERY PACK</h3>
-      <p>8× Grade A prismatic LFP cells (100Ah each) in a 4S2P configuration — delivering 12V at 200Ah. Architecture is already designed for upgrade to 8S1P at 24V when the hybrid inverter arrives.</p>
-      <span class="tag">4S2P</span><span class="tag">12V / 200Ah</span><span class="tag">LFP Chemistry</span>
-    </div>
-    <div class="sys-card">
-      <span class="sys-icon">🧠</span>
-      <h3>SMART BMS</h3>
-      <p>JK Smart BMS (4–8S, 200A) with 2A active cell balancing continuously redistributes energy to keep SOC (State of Charge) uniform across the pack — critical for cycle life and preventing cell-level over/under-charge.</p>
-      <span class="tag">JK 200A BMS</span><span class="tag">2A Active Balancing</span><span class="tag">Dual NTC Probes</span>
-    </div>
-    <div class="sys-card">
-      <span class="sys-icon">☀️</span>
-      <h3>SOLAR ARRAY</h3>
-      <p>~1.1kW bifacial solar panels feeding a 50A MPPT charge controller. MPPT continuously tracks the panel's peak power point — maximising harvest regardless of temperature variation or partial shading.</p>
-      <span class="tag">1.1kW Peak</span><span class="tag">50A MPPT</span><span class="tag">Ashapower</span>
-    </div>
+
+  <span class="sys-icon">🧠</span>
+
+  <h3>SMART BMS</h3>
+
+  <p>
+    JK Smart BMS (4–8S, 200A) with 2A active cell balancing continuously redistributes energy to keep SOC (State of Charge) uniform across the pack — critical for cycle life and preventing cell-level over/under-charge.
+  </p>
+
+  <div class="sys-preview">
+    <img src="SOC.png"
+         alt="JK BMS mobile application showing live telemetry">
+  </div>
+
+  <span class="tag">JK 200A BMS</span>
+  <span class="tag">Bluetooth Monitoring</span>
+  <span class="tag">2A Active Balancing</span>
+  <span class="tag">Real-Time SOC</span>
+
+
+</div>
+
+<div class="sys-card">
+
+  <span class="sys-icon">🔋</span>
+
+  <h3>BATTERY PACK</h3>
+
+  <p>
+    8× Grade A prismatic LFP cells (100Ah each) in a 4S2P configuration — delivering 12V at 200Ah. Architecture is already designed for upgrade to 8S1P at 24V when the hybrid inverter arrives.
+  </p>
+
+  <div class="sys-preview">
+    <img src="Battery.jpg"
+         alt="DIY LiFePO4 battery pack assembly">
+  </div>
+
+  <span class="tag">4S2P</span>
+  <span class="tag">12V / 200Ah</span>
+  <span class="tag">LFP Chemistry</span>
+  <span class="tag">2.4kWh</span>
+
+</div>
+    
     <div class="sys-card">
       <span class="sys-icon">⚡</span>
       <h3>INVERTER &amp; DISPLAY</h3>
